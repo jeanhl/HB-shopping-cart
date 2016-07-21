@@ -60,7 +60,16 @@ def show_melon(melon_id):
 def shopping_cart():
     """Display content of shopping cart."""
 
+    list_ids = session['cart']
+    dict_melon = {}
 
+    for each_id in list_ids:
+
+        count_ids = list_ids.count(each_id)
+        dict_melon[each_id] = [count_ids]
+        dict_melon[each_id].append()    
+
+    melon = melons.get_by_id(each_id)    
     # TODO: Display the contents of the shopping cart.
 
     # The logic here will be something like:
@@ -82,18 +91,18 @@ def add_to_cart(id):
     When a melon is added to the cart, redirect browser to the shopping cart
     page and display a confirmation message: 'Successfully added to cart'.
     """
+    if 'cart' not in session:
+        ##session['cart'] = request.args.get(id, [])
+        session['cart'] = session.get('cart', [])
+        session['cart'] = [id]
+    else:
+        session['cart'].append(id)
 
-    
-    session['cart'] = request.args.get(id, [])
-    #Need a flash message
+    print session['cart']
+    flash("Your order has been added to cart")
 
-    # TODO: Finish shopping cart functionality
+    return redirect("/melons")
 
-    # The logic here should be something like:
-    #
-    # - add the id of the melon they bought to the cart in the session
-
-    return "Oops! This needs to be implemented!"
 
 
 @app.route("/login", methods=["GET"])
